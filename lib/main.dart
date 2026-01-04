@@ -207,14 +207,7 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.poppinsTextTheme(), // Menggunakan Google Fonts
         scaffoldBackgroundColor: const Color(0xFFF8F9FA),
-        cardTheme: CardTheme(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-            side: BorderSide(color: Colors.grey.shade200),
-          ),
-          color: Colors.white,
-        )
+        // FIX: Bagian cardTheme DIHAPUS agar kompatibel dengan Vercel & Flutter 3.38+
       ),
       home: const MainLayout(),
     );
@@ -593,6 +586,8 @@ class AlternatifView extends StatelessWidget {
               final alt = provider.alternatifList[index];
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.grey.shade200)),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
                   onTap: () => _showDetailAlternatif(context, provider, alt), // AKSI KLIK DISINI
@@ -658,6 +653,8 @@ class KriteriaView extends StatelessWidget {
               final isBenefit = k.tipe == 'Benefit';
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.grey.shade200)),
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Row(
@@ -780,6 +777,8 @@ class PenilaianView extends StatelessWidget {
               final alt = provider.alternatifList[index];
               return Card(
                 margin: const EdgeInsets.only(bottom: 12),
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.grey.shade200)),
                 child: Theme(
                   data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
                   child: ExpansionTile(
@@ -875,6 +874,8 @@ class PerhitunganView extends StatelessWidget {
                       // Tab 1
                       SingleChildScrollView(
                         child: Card(
+                          elevation: 2,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.grey.shade200)),
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: DataTable(
@@ -899,6 +900,8 @@ class PerhitunganView extends StatelessWidget {
                       ListView(
                         children: [
                           Card(
+                            elevation: 2,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.grey.shade200)),
                             child: SingleChildScrollView(
                               scrollDirection: Axis.horizontal,
                               child: DataTable(
@@ -1030,6 +1033,8 @@ class HasilView extends StatelessWidget {
         const SizedBox(height: 20),
         Expanded(
           child: Card(
+            elevation: 2,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.grey.shade200)),
             child: ListView.separated(
               itemCount: provider.alternatifList.length,
               separatorBuilder: (c, i) => const Divider(height: 1),
