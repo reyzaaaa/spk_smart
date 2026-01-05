@@ -53,7 +53,7 @@ class SubKriteria {
 }
 
 class SpkProvider with ChangeNotifier {
-  // Data Dummy Awal
+  // Data Kriteria
   final List<Kriteria> _kriteriaList = [
     Kriteria(id: 'C1', nama: 'Harga Sewa', bobot: 30, tipe: 'Cost'),
     Kriteria(id: 'C2', nama: 'Jarak', bobot: 25, tipe: 'Cost'),
@@ -69,24 +69,48 @@ class SpkProvider with ChangeNotifier {
   ];
 
   final List<Penilaian> _penilaianList = [
-    Penilaian(idAlternatif: 'A1', idKriteria: 'C1', nilai: 900000), Penilaian(idAlternatif: 'A1', idKriteria: 'C2', nilai: 350), Penilaian(idAlternatif: 'A1', idKriteria: 'C3', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C4', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C5', nilai: 3),
-    Penilaian(idAlternatif: 'A2', idKriteria: 'C1', nilai: 850000), Penilaian(idAlternatif: 'A2', idKriteria: 'C2', nilai: 250), Penilaian(idAlternatif: 'A2', idKriteria: 'C3', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C4', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C5', nilai: 4),
-    Penilaian(idAlternatif: 'A3', idKriteria: 'C1', nilai: 750000), Penilaian(idAlternatif: 'A3', idKriteria: 'C2', nilai: 500), Penilaian(idAlternatif: 'A3', idKriteria: 'C3', nilai: 5), Penilaian(idAlternatif: 'A3', idKriteria: 'C4', nilai: 4), Penilaian(idAlternatif: 'A3', idKriteria: 'C5', nilai: 5),
+    // Data Dummy Awal (Bisa diedit di aplikasi)
+    Penilaian(idAlternatif: 'A1', idKriteria: 'C1', nilai: 2), Penilaian(idAlternatif: 'A1', idKriteria: 'C2', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C3', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C4', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C5', nilai: 3),
+    Penilaian(idAlternatif: 'A2', idKriteria: 'C1', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C2', nilai: 2), Penilaian(idAlternatif: 'A2', idKriteria: 'C3', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C4', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C5', nilai: 4),
+    Penilaian(idAlternatif: 'A3', idKriteria: 'C1', nilai: 5), Penilaian(idAlternatif: 'A3', idKriteria: 'C2', nilai: 5), Penilaian(idAlternatif: 'A3', idKriteria: 'C3', nilai: 5), Penilaian(idAlternatif: 'A3', idKriteria: 'C4', nilai: 4), Penilaian(idAlternatif: 'A3', idKriteria: 'C5', nilai: 5),
   ];
 
+  // DATA SUB KRITERIA BARU SESUAI REQUEST
   final List<SubKriteria> _subKriteriaList = [
-    SubKriteria(kriteriaId: 'C3', rating: 4, deskripsi: "Sangat lengkap"),
-    SubKriteria(kriteriaId: 'C3', rating: 3, deskripsi: "Lengkap"),
-    SubKriteria(kriteriaId: 'C3', rating: 2, deskripsi: "Standar"),
-    SubKriteria(kriteriaId: 'C3', rating: 1, deskripsi: "Minim fasilitas"),
-    SubKriteria(kriteriaId: 'C4', rating: 4, deskripsi: "Sangat aman"),
-    SubKriteria(kriteriaId: 'C4', rating: 3, deskripsi: "Aman"),
-    SubKriteria(kriteriaId: 'C4', rating: 2, deskripsi: "Cukup aman"),
-    SubKriteria(kriteriaId: 'C4', rating: 1, deskripsi: "Kurang aman"),
-    SubKriteria(kriteriaId: 'C5', rating: 4, deskripsi: "Sangat nyaman"),
-    SubKriteria(kriteriaId: 'C5', rating: 3, deskripsi: "Nyaman"),
-    SubKriteria(kriteriaId: 'C5', rating: 2, deskripsi: "Kurang nyaman"),
-    SubKriteria(kriteriaId: 'C5', rating: 1, deskripsi: "Tidak nyaman"),
+    // --- C1: Harga Sewa (Cost) ---
+    SubKriteria(kriteriaId: 'C1', rating: 1, deskripsi: "Rp. 900.000 – Rp. 950.000"),
+    SubKriteria(kriteriaId: 'C1', rating: 2, deskripsi: "Rp. 850.000 – Rp. 899.000"),
+    SubKriteria(kriteriaId: 'C1', rating: 3, deskripsi: "Rp. 800.000 – Rp. 849.000"),
+    SubKriteria(kriteriaId: 'C1', rating: 4, deskripsi: "Rp. 700.000 – Rp. 799.000"),
+    SubKriteria(kriteriaId: 'C1', rating: 5, deskripsi: "< Rp. 700.000"),
+
+    // --- C2: Jarak (Cost) ---
+    SubKriteria(kriteriaId: 'C2', rating: 1, deskripsi: "≥ 450 meter"),
+    SubKriteria(kriteriaId: 'C2', rating: 2, deskripsi: "351 – 449 meter"),
+    SubKriteria(kriteriaId: 'C2', rating: 3, deskripsi: "251 – 350 meter"),
+    SubKriteria(kriteriaId: 'C2', rating: 4, deskripsi: "≤ 250 meter"),
+    SubKriteria(kriteriaId: 'C2', rating: 5, deskripsi: "≤ 150 meter"),
+
+    // --- C3: Fasilitas (Benefit) ---
+    SubKriteria(kriteriaId: 'C3', rating: 1, deskripsi: "Minim fasilitas (hanya kamar kosong)"),
+    SubKriteria(kriteriaId: 'C3', rating: 2, deskripsi: "Standar (kamar mandi luar, kasur, lemari)"),
+    SubKriteria(kriteriaId: 'C3', rating: 3, deskripsi: "Lengkap (kamar mandi dalam, WiFi, lemari, kasur)"),
+    SubKriteria(kriteriaId: 'C3', rating: 4, deskripsi: "Sangat lengkap (KM dalam, WiFi, kasur, lemari, dapur)"),
+    SubKriteria(kriteriaId: 'C3', rating: 5, deskripsi: "Sangat lengkap + premium (AC, WiFi cepat, meja, kasur premium)"),
+
+    // --- C4: Keamanan (Benefit) ---
+    SubKriteria(kriteriaId: 'C4', rating: 1, deskripsi: "Kurang aman (tanpa pengawasan)"),
+    SubKriteria(kriteriaId: 'C4', rating: 2, deskripsi: "Cukup aman (lingkungan relatif aman)"),
+    SubKriteria(kriteriaId: 'C4', rating: 3, deskripsi: "Aman (penjaga kos/pengawasan)"),
+    SubKriteria(kriteriaId: 'C4', rating: 4, deskripsi: "Sangat aman (penjaga + pagar)"),
+    SubKriteria(kriteriaId: 'C4', rating: 5, deskripsi: "Sangat aman + (CCTV, pagar, akses terbatas)"),
+
+    // --- C5: Kenyamanan (Benefit) ---
+    SubKriteria(kriteriaId: 'C5', rating: 1, deskripsi: "Tidak nyaman (berisik, kotor, dekat jalan besar)"),
+    SubKriteria(kriteriaId: 'C5', rating: 2, deskripsi: "Kurang nyaman (cukup berisik atau kurang bersih)"),
+    SubKriteria(kriteriaId: 'C5', rating: 3, deskripsi: "Nyaman (cukup tenang dan bersih)"),
+    SubKriteria(kriteriaId: 'C5', rating: 4, deskripsi: "Sangat nyaman (tenang, bersih, lingkungan tertata)"),
+    SubKriteria(kriteriaId: 'C5', rating: 5, deskripsi: "Sangat nyaman (tenang, bersih, tidak berisik)"),
   ];
 
   List<Kriteria> get kriteriaList => _kriteriaList;
@@ -131,7 +155,7 @@ class SpkProvider with ChangeNotifier {
     return _subKriteriaList
         .where((s) => s.kriteriaId == kriteriaId)
         .toList()
-      ..sort((a, b) => b.rating.compareTo(a.rating));
+      ..sort((a, b) => b.rating.compareTo(a.rating)); // Sort descending by rating
   }
 
   void hitungSmart() {
@@ -704,18 +728,19 @@ class SubKriteriaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SpkProvider>(context);
-    final kriteriaKualitatif = provider.kriteriaList.where((k) => k.tipe == 'Benefit').toList();
+    // PERBAIKAN: Menampilkan semua kriteria (Cost & Benefit) agar tabel referensi lengkap
+    final allKriteria = provider.kriteriaList;
 
     return Column(
       children: [
-        const HeaderContent(title: "Sub Kriteria", subtitle: "Panduan rating untuk kriteria kualitatif"),
+        const HeaderContent(title: "Sub Kriteria", subtitle: "Panduan rating untuk semua kriteria"),
         
         // PENGGUNAAN SINGLE CHILD SCROLL VIEW (SCROLLVIEW)
         Expanded(
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
-              children: kriteriaKualitatif.map((kriteria) {
+              children: allKriteria.map((kriteria) {
                 final subList = provider.getSubKriteriaByKriteria(kriteria.id);
                 if (subList.isEmpty) return const SizedBox.shrink();
 
