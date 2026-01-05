@@ -69,12 +69,13 @@ class SpkProvider with ChangeNotifier {
   ];
 
   final List<Penilaian> _penilaianList = [
-    // Data Dummy Awal
+    // Data Dummy Awal (Bisa diedit di aplikasi)
     Penilaian(idAlternatif: 'A1', idKriteria: 'C1', nilai: 2), Penilaian(idAlternatif: 'A1', idKriteria: 'C2', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C3', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C4', nilai: 3), Penilaian(idAlternatif: 'A1', idKriteria: 'C5', nilai: 3),
     Penilaian(idAlternatif: 'A2', idKriteria: 'C1', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C2', nilai: 2), Penilaian(idAlternatif: 'A2', idKriteria: 'C3', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C4', nilai: 4), Penilaian(idAlternatif: 'A2', idKriteria: 'C5', nilai: 4),
     Penilaian(idAlternatif: 'A3', idKriteria: 'C1', nilai: 5), Penilaian(idAlternatif: 'A3', idKriteria: 'C2', nilai: 5), Penilaian(idAlternatif: 'A3', idKriteria: 'C3', nilai: 5), Penilaian(idAlternatif: 'A3', idKriteria: 'C4', nilai: 4), Penilaian(idAlternatif: 'A3', idKriteria: 'C5', nilai: 5),
   ];
 
+  // DATA SUB KRITERIA BARU SESUAI REQUEST
   final List<SubKriteria> _subKriteriaList = [
     // --- C1: Harga Sewa (Cost) ---
     SubKriteria(kriteriaId: 'C1', rating: 1, deskripsi: "Rp. 900.000 – Rp. 950.000"),
@@ -154,7 +155,7 @@ class SpkProvider with ChangeNotifier {
     return _subKriteriaList
         .where((s) => s.kriteriaId == kriteriaId)
         .toList()
-      ..sort((a, b) => b.rating.compareTo(a.rating));
+      ..sort((a, b) => b.rating.compareTo(a.rating)); // Sort descending by rating
   }
 
   void hitungSmart() {
@@ -224,12 +225,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6C63FF),
+          seedColor: const Color(0xFF6C63FF), // Modern Purple
           brightness: Brightness.light,
           surface: const Color(0xFFF8F9FA),
         ),
-        textTheme: GoogleFonts.poppinsTextTheme(),
+        textTheme: GoogleFonts.poppinsTextTheme(), // Menggunakan Google Fonts
         scaffoldBackgroundColor: const Color(0xFFF8F9FA),
+        // FIX: Bagian cardTheme DIHAPUS agar kompatibel dengan Vercel & Flutter 3.38+
       ),
       home: const MainLayout(),
     );
@@ -262,48 +264,45 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    // Breakpoint untuk Desktop vs Mobile
-    final isDesktop = MediaQuery.of(context).size.width > 800;
+    // Responsive: Jika layar kecil (HP), gunakan BottomNav, jika besar (Tablet/Web) gunakan Rail
+    final isDesktop = MediaQuery.of(context).size.width > 600;
 
     return Scaffold(
-      // FIX: SafeArea agar tidak ketutup notch HP
-      body: SafeArea(
-        child: Row(
-          children: [
-            if (isDesktop)
-            NavigationRail(
-              selectedIndex: _selectedIndex,
-              onDestinationSelected: (int index) => setState(() => _selectedIndex = index),
-              backgroundColor: Colors.white,
-              indicatorColor: const Color(0xFF6C63FF).withOpacity(0.1),
-              selectedIconTheme: const IconThemeData(color: Color(0xFF6C63FF)),
-              unselectedIconTheme: IconThemeData(color: Colors.grey.shade400),
-              labelType: NavigationRailLabelType.all,
-              leading: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24.0),
-                child: Icon(Icons.analytics_rounded, size: 32, color: const Color(0xFF6C63FF)),
-              ),
-              destinations: const [
-                NavigationRailDestination(icon: Icon(Icons.dashboard_outlined), selectedIcon: Icon(Icons.dashboard), label: Text('Dash')),
-                NavigationRailDestination(icon: Icon(Icons.home_work_outlined), selectedIcon: Icon(Icons.home_work), label: Text('Alt')),
-                NavigationRailDestination(icon: Icon(Icons.tune), selectedIcon: Icon(Icons.tune), label: Text('Krit')),
-                NavigationRailDestination(icon: Icon(Icons.layers_outlined), selectedIcon: Icon(Icons.layers), label: Text('Sub')),
-                NavigationRailDestination(icon: Icon(Icons.edit_note), selectedIcon: Icon(Icons.edit), label: Text('Nilai')),
-                NavigationRailDestination(icon: Icon(Icons.calculate_outlined), selectedIcon: Icon(Icons.calculate), label: Text('Hitung')),
-                NavigationRailDestination(icon: Icon(Icons.emoji_events_outlined), selectedIcon: Icon(Icons.emoji_events), label: Text('Hasil')),
-              ],
+      body: Row(
+        children: [
+          if (isDesktop)
+          NavigationRail(
+            selectedIndex: _selectedIndex,
+            onDestinationSelected: (int index) => setState(() => _selectedIndex = index),
+            backgroundColor: Colors.white,
+            indicatorColor: const Color(0xFF6C63FF).withOpacity(0.1),
+            selectedIconTheme: const IconThemeData(color: Color(0xFF6C63FF)),
+            unselectedIconTheme: IconThemeData(color: Colors.grey.shade400),
+            labelType: NavigationRailLabelType.all,
+            leading: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              child: Icon(Icons.analytics_rounded, size: 32, color: const Color(0xFF6C63FF)),
             ),
-            if (isDesktop) const VerticalDivider(thickness: 1, width: 1),
-            
-            Expanded(
-              child: Container(
-                color: const Color(0xFFF8F9FA),
-                padding: const EdgeInsets.all(20.0),
-                child: _pages[_selectedIndex],
-              ),
+            destinations: const [
+              NavigationRailDestination(icon: Icon(Icons.dashboard_outlined), selectedIcon: Icon(Icons.dashboard), label: Text('Dash')),
+              NavigationRailDestination(icon: Icon(Icons.home_work_outlined), selectedIcon: Icon(Icons.home_work), label: Text('Alt')),
+              NavigationRailDestination(icon: Icon(Icons.tune), selectedIcon: Icon(Icons.tune), label: Text('Krit')),
+              NavigationRailDestination(icon: Icon(Icons.layers_outlined), selectedIcon: Icon(Icons.layers), label: Text('Sub')),
+              NavigationRailDestination(icon: Icon(Icons.edit_note), selectedIcon: Icon(Icons.edit), label: Text('Nilai')),
+              NavigationRailDestination(icon: Icon(Icons.calculate_outlined), selectedIcon: Icon(Icons.calculate), label: Text('Hitung')),
+              NavigationRailDestination(icon: Icon(Icons.emoji_events_outlined), selectedIcon: Icon(Icons.emoji_events), label: Text('Hasil')),
+            ],
+          ),
+          if (isDesktop) const VerticalDivider(thickness: 1, width: 1),
+          
+          Expanded(
+            child: Container(
+              color: const Color(0xFFF8F9FA),
+              padding: const EdgeInsets.all(20.0),
+              child: _pages[_selectedIndex],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       bottomNavigationBar: isDesktop ? null : NavigationBar(
         selectedIndex: _selectedIndex,
@@ -330,14 +329,10 @@ class HeaderContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // FIX: Header responsive agar tombol tidak nabrak text di HP
     return Container(
       margin: const EdgeInsets.only(bottom: 24),
-      child: Wrap(
-        alignment: WrapAlignment.spaceBetween,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        spacing: 10,
-        runSpacing: 10,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -354,7 +349,7 @@ class HeaderContent extends StatelessWidget {
 }
 
 // ==========================================
-// 4. HALAMAN DASHBOARD (RESPONSIF FIX)
+// 4. HALAMAN DASHBOARD (POWERFUL UI)
 // ==========================================
 
 class DashboardPage extends StatelessWidget {
@@ -368,39 +363,24 @@ class DashboardPage extends StatelessWidget {
        Future.microtask(() => provider.hitungSmart());
     }
 
-    // Cek lebar layar
-    final isMobile = MediaQuery.of(context).size.width < 800;
-
-    return SingleChildScrollView( // Tambah ScrollView untuk Dashboard agar aman di HP kecil
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const HeaderContent(title: "Selamat Datang, Admin!", subtitle: "Sistem Pendukung Keputusan Metode SMART"),
-          
-          // FIX: Gunakan Column jika mobile, Row jika desktop
-          isMobile 
-          ? Column(
-              children: [
-                _buildStatCard("Total Alternatif", "${provider.alternatifList.length}", Icons.home_work, const Color(0xFF6C63FF)),
-                const SizedBox(height: 12),
-                _buildStatCard("Total Kriteria", "${provider.kriteriaList.length}", Icons.tune, Colors.orange),
-                const SizedBox(height: 12),
-                _buildStatCard("Rekomendasi", provider.alternatifList.isNotEmpty ? provider.alternatifList.first.nama : "-", Icons.emoji_events, Colors.green),
-              ],
-            )
-          : Row(
-              children: [
-                _buildStatCard("Total Alternatif", "${provider.alternatifList.length}", Icons.home_work, const Color(0xFF6C63FF)),
-                const SizedBox(width: 16),
-                _buildStatCard("Total Kriteria", "${provider.kriteriaList.length}", Icons.tune, Colors.orange),
-                const SizedBox(width: 16),
-                _buildStatCard("Rekomendasi", provider.alternatifList.isNotEmpty ? provider.alternatifList.first.nama : "-", Icons.emoji_events, Colors.green),
-              ],
-            ),
-            
-          const SizedBox(height: 24),
-          
-          Container(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const HeaderContent(title: "Selamat Datang, Admin!", subtitle: "Sistem Pendukung Keputusan Metode SMART"),
+        
+        Row(
+          children: [
+            _buildStatCard("Total Alternatif", "${provider.alternatifList.length}", Icons.home_work, const Color(0xFF6C63FF)),
+            const SizedBox(width: 16),
+            _buildStatCard("Total Kriteria", "${provider.kriteriaList.length}", Icons.tune, Colors.orange),
+            const SizedBox(width: 16),
+            _buildStatCard("Rekomendasi", provider.alternatifList.isNotEmpty ? provider.alternatifList.first.nama : "-", Icons.emoji_events, Colors.green),
+          ],
+        ),
+        const SizedBox(height: 24),
+        
+        Expanded(
+          child: Container(
             width: double.infinity,
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
@@ -417,56 +397,44 @@ class DashboardPage extends StatelessWidget {
                   "Metode Simple Multi Attribute Rating Technique (SMART) merupakan metode pengambilan keputusan multi-kriteria yang didasarkan pada teori bahwa setiap alternatif terdiri dari sejumlah kriteria yang memiliki nilai-nilai dan setiap kriteria memiliki bobot yang menggambarkan seberapa penting kriteria tersebut dibandingkan dengan kriteria lain.",
                   style: GoogleFonts.poppins(color: Colors.grey.shade600, height: 1.6),
                 ),
-                const SizedBox(height: 30),
+                const Spacer(),
                 Center(
                   child: Icon(Icons.bar_chart_rounded, size: 100, color: Colors.grey.shade200),
                 ),
                 Center(child: Text("Silakan masuk ke menu Perhitungan", style: TextStyle(color: Colors.grey.shade400))),
-                const SizedBox(height: 20),
+                const Spacer(),
               ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  // Helper widget stat card (diubah sedikit agar flexible)
   Widget _buildStatCard(String title, String value, IconData icon, Color color) {
-    return Container(
-      width: double.infinity, // Agar full width di dalam Expanded (Desktop) atau Column (Mobile)
-      constraints: const BoxConstraints(minHeight: 120),
-      child: Expanded( // Expanded hanya bekerja jika parentnya Row/Column yang valid
-        flex: 1,
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.grey.shade200),
-            boxShadow: [
-              BoxShadow(color: Colors.grey.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))
-            ],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-                child: Icon(icon, color: color, size: 24),
-              ),
-              const SizedBox(height: 16),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(value, style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87), maxLines: 1, overflow: TextOverflow.ellipsis),
-                  Text(title, style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey.shade500)),
-                ],
-              )
-            ],
-          ),
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey.shade200),
+          boxShadow: [
+            BoxShadow(color: Colors.grey.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 4))
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
+              child: Icon(icon, color: color, size: 24),
+            ),
+            const SizedBox(height: 16),
+            Text(value, style: GoogleFonts.poppins(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87), maxLines: 1, overflow: TextOverflow.ellipsis),
+            Text(title, style: GoogleFonts.poppins(fontSize: 13, color: Colors.grey.shade500)),
+          ],
         ),
       ),
     );
@@ -497,9 +465,11 @@ class AlternatifView extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
               ),
+              // PERBAIKAN SCROLLING: Menggunakan satu ListView.separated untuk Header + Isi
+              // Item index 0 = Header, index > 0 = List Item
               child: ListView.separated(
                 controller: controller,
-                padding: EdgeInsets.zero, 
+                padding: EdgeInsets.zero, // Padding nol agar header mentok atas
                 itemCount: provider.kriteriaList.length + 1, // +1 untuk Header
                 separatorBuilder: (context, index) => index == 0 ? const SizedBox.shrink() : const Divider(height: 1),
                 itemBuilder: (context, index) {
@@ -540,6 +510,7 @@ class AlternatifView extends StatelessWidget {
                   }
 
                   // === BAGIAN LIST ITEM ===
+                  // Karena index 0 dipakai header, data diambil dari index - 1
                   final kriteria = provider.kriteriaList[index - 1];
                   final nilai = provider.getNilai(alt.id, kriteria.id);
                   final isBenefit = kriteria.tipe == 'Benefit';
@@ -643,7 +614,7 @@ class AlternatifView extends StatelessWidget {
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12), side: BorderSide(color: Colors.grey.shade200)),
                 child: InkWell(
                   borderRadius: BorderRadius.circular(12),
-                  onTap: () => _showDetailAlternatif(context, provider, alt), 
+                  onTap: () => _showDetailAlternatif(context, provider, alt), // AKSI KLIK DISINI
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
                     child: Row(
@@ -757,12 +728,14 @@ class SubKriteriaView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<SpkProvider>(context);
+    // PERBAIKAN: Menampilkan semua kriteria (Cost & Benefit) agar tabel referensi lengkap
     final allKriteria = provider.kriteriaList;
 
     return Column(
       children: [
         const HeaderContent(title: "Sub Kriteria", subtitle: "Panduan rating untuk semua kriteria"),
         
+        // PENGGUNAAN SINGLE CHILD SCROLL VIEW (SCROLLVIEW)
         Expanded(
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
